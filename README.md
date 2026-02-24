@@ -133,20 +133,47 @@ config :salad_ui, :error_translator_function, {MyAppWeb.CoreComponents, :transla
 
 ## 🛠️ Development
 
-Here is how to start develop SaladUI on local machine.
-
 1. Clone this repo
-2. Go into storybook folder
-3. Start storybook
-
-```
+2. Start the storybook:
+```bash
 cd storybook
+mix deps.get
 mix phx.server
 ```
+The interactive component explorer will be available at http://localhost:4000.
 
-## Unit Testing
+## Testing
 
-All v1 component are not covered by UnitTest. Currently I'm working on an important project so I don't have much time for this. If you're interested in this project, please help to add Unit Test if possible. 🙏
+### Elixir unit tests
+```bash
+mix test test/salad_ui
+```
+
+### JS linting (Biome)
+```bash
+cd assets && npx biome check salad_ui/
+```
+
+### JS type checking (tsc + JSDoc)
+```bash
+cd assets && npx tsc --noEmit -p jsconfig.json
+```
+
+### JS unit tests (Vitest)
+```bash
+cd assets && npx vitest run
+```
+
+### Browser integration tests (Wallaby + ChromeDriver)
+```bash
+cd storybook
+mix deps.get
+mix assets.build && mix tailwind storybook
+mix test test/browser/
+```
+
+If using [devenv](https://devenv.sh/), shortcut scripts are available:
+`lint-js`, `typecheck-js`, `test-js`, `test-browser`.
 
 ## List of components
 
@@ -155,29 +182,36 @@ All v1 component are not covered by UnitTest. Currently I'm working on an import
 | Accordion      | ✅    | ✅    |
 | Alert          | ✅    | ✅     |
 | Alert Dialog   | ✅    | ✅    |
+| Aspect Ratio   | ❌    | ✅    |
 | Avatar         | ✅    | ✅     |
 | Badge          | ✅    | ✅     |
 | Breadcrumb     | ✅    | ✅     |
 | Button         | ✅    | ✅     |
 | Card           | ✅    | ✅     |
-| Carousel       | ❌    |      |
+| Calendar       | ❌    | ✅    |
+| Carousel       | ❌    | ✅    |
 | Checkbox       | ✅    | ✅     |
 | Collapsible    | ✅    | ✅    |
-| Combobox       | ❌    |      |
+| Combobox       | ❌    | ✅    |
 | Command        | ❌    | ✅ [@ilyabayel](https://github.com/ilyabayel)     |
-| Context Menu   | ❌    |      |
+| Context Menu   | ❌    | ✅    |
+| Data Table     | ❌    | ✅    |
+| Date Picker    | ❌    | ✅    |
 | Dialog         | ✅    | ✅     |
-| Drawer         | ❌    |      |
+| Drawer         | ❌    | ✅    |
 | Dropdown Menu  | ✅    | ✅     |
 | Form           | ✅    | ✅     |
 | Hover Card     | ✅    | ✅      |
 | Input          | ✅    | ✅     |
-| Input OTP      | ❌    |      |
+| Input OTP      | ❌    | ✅    |
 | Label          | ✅    | ✅      |
+| Menubar        | ❌    | ✅    |
+| Navigation Menu| ❌    | ✅    |
 | Pagination     | ✅    | ✅     |
 | Popover        | ✅    | ✅     |
 | Progress       | ✅    | ✅    |
 | Radio Group    | ✅    | ✅     |
+| Resizable      | ❌    | ✅    |
 | Scroll Area    | ✅    | ✅    |
 | Select         | ✅    | ✅     |
 | Separator      | ✅    | ✅     |
@@ -188,6 +222,7 @@ All v1 component are not covered by UnitTest. Currently I'm working on an import
 | Table          | ✅    | ✅    |
 | Tabs           | ✅    | ✅     |
 | Textarea       | ✅    | ✅     |
+| Toast          | ❌    | ✅    |
 | Tooltip        | ✅    | ✅    |
 
 ## 🌟 Contributors

@@ -1,87 +1,146 @@
 name: Tests
 
-# Define workflow that runs when changes are pushed to the
-# `main` branch or pushed to a PR branch that targets the `main`
-# branch. Change the branch name if your project uses a
-# different name for the main branch like "master" or "production".
 on:
   push:
-    branches: [ "master", "main", "staging", "dev", "setup-dev", "setting-up-tests"]  # adapt branch for project
+    branches: ["master", "main"]
   pull_request:
-    branches: [ "master", "main", "staging", "dev", "setup-dev", "setting-up-tests"]  # adapt branch for project
-
-# Sets the ENV `MIX_ENV` to `test` for running tests
-env:
-  MIX_ENV: test
+    branches: ["master", "main"]
 
 permissions:
   contents: read
 
 jobs:
-  test:
+  elixir:
+    name: Elixir tests
     runs-on: ubuntu-latest
-    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    env:
+      MIX_ENV: test
     strategy:
-      # Specify the OTP and Elixir versions to use when building
-      # and running the workflow steps.
       matrix:
-        otp: ['26']       # Define the OTP version [required]
-        elixir: ['1.16.2']    # Define the elixir version [required]
+        otp: ['26']
+        elixir: ['1.16.2']
     steps:
-    # Step: Setup Elixir + Erlang image as the base.
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        otp-version: ${{matrix.otp}}
-        elixir-version: ${{matrix.elixir}}
+      - uses: actions/checkout@v4
 
-    # Step: Check out the code.
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
 
-    # Step: Define how to cache deps. Restores existing cache if present.
-    - name: Cache deps
-      id: cache-deps
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
 
-    # Step: Define how to cache the `_build` directory. After the first run,
-    # this speeds up tests runs a lot. This includes not re-compiling our
-    # project's downloaded deps every run.
-    - name: Cache compiled build
-      id: cache-build
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-compiled-build
-      with:
-        path: _build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: _build
+          key: ${{ runner.os }}-build-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-build-
 
-    # Step: Download project dependencies. If unchanged, uses
-    # the cached version.
-    - name: Install dependencies
-      run: mix deps.get
+      - name: Install dependencies
+        run: mix deps.get
 
-    # Step: Compile the project treating any warnings as errors.
-    # Customize this step if a different behavior is desired.
-    - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
+      - name: Compile without warnings
+        run: mix compile --warnings-as-errors
 
-    # Step: Check that the checked in code has already been formatted.
-    # This step fails if something was found unformatted.
-    # Customize this step as desired.
-    - name: Check Formatting
-      run: mix format --check-formatted
+      - name: Check formatting
+        run: mix format --check-formatted
 
-    # Step: Execute the tests.
-    - name: Run tests
-      run: mix test test/salad_ui
+      - name: Run tests
+        run: mix test test/salad_ui
+
+  js:
+    name: JS lint + typecheck + unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assets
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: assets/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint (Biome)
+        run: npx biome check salad_ui/
+
+      - name: Type check (tsc)
+        run: npx tsc --noEmit -p jsconfig.json
+
+      - name: Unit tests (Vitest)
+        run: npx vitest run
+
+  browser:
+    name: Browser tests (Wallaby)
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+    strategy:
+      matrix:
+        otp: ['26']
+        elixir: ['1.16.2']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+
+      - name: Cache storybook deps
+        uses: actions/cache@v4
+        with:
+          path: storybook/deps
+          key: ${{ runner.os }}-storybook-deps-${{ hashFiles('storybook/mix.lock') }}
+          restore-keys: ${{ runner.os }}-storybook-deps-
+
+      - name: Cache storybook build
+        uses: actions/cache@v4
+        with:
+          path: storybook/_build
+          key: ${{ runner.os }}-storybook-build-${{ hashFiles('storybook/mix.lock') }}
+          restore-keys: ${{ runner.os }}-storybook-build-
+
+      - name: Install storybook dependencies
+        working-directory: storybook
+        run: mix deps.get
+
+      - name: Install storybook JS dependencies
+        working-directory: storybook/assets
+        run: npm install
+
+      - name: Build storybook assets
+        working-directory: storybook
+        run: |
+          mix esbuild default
+          mix tailwind default
+          mix tailwind storybook
+
+      - name: Compile storybook
+        working-directory: storybook
+        run: mix compile
+
+      - name: Run browser tests
+        working-directory: storybook
+        run: mix test test/browser/

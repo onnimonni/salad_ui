@@ -184,4 +184,108 @@ defmodule SaladUI.Form do
     </p>
     """
   end
+
+  @doc """
+  Semantic `<fieldset>` wrapper for grouping related form fields.
+
+  ## Examples
+
+      <.fieldset>
+        <.field_legend>Personal Information</.field_legend>
+        <.form_item>...</.form_item>
+      </.fieldset>
+  """
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def fieldset(assigns) do
+    ~H"""
+    <fieldset class={classes(["space-y-4", @class])} {@rest}>
+      {render_slot(@inner_block)}
+    </fieldset>
+    """
+  end
+
+  @doc """
+  Legend element for a fieldset.
+
+  ## Examples
+
+      <.field_legend>Account Details</.field_legend>
+  """
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def field_legend(assigns) do
+    ~H"""
+    <legend class={classes(["text-sm font-semibold leading-none", @class])} {@rest}>
+      {render_slot(@inner_block)}
+    </legend>
+    """
+  end
+
+  @doc """
+  Layout wrapper for stacking form fields.
+
+  ## Options
+
+  * `:orientation` - Stack direction: `"vertical"` or `"horizontal"`. Defaults to `"vertical"`.
+
+  ## Examples
+
+      <.field_group>
+        <.form_item>...</.form_item>
+        <.form_item>...</.form_item>
+      </.field_group>
+
+      <.field_group orientation="horizontal">
+        <.form_item>...</.form_item>
+        <.form_item>...</.form_item>
+      </.field_group>
+  """
+  attr :class, :string, default: nil
+
+  attr :orientation, :string,
+    values: ~w(vertical horizontal),
+    default: "vertical",
+    doc: "stacking direction"
+
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def field_group(assigns) do
+    ~H"""
+    <div
+      class={
+        classes([
+          "flex gap-4",
+          (@orientation == "vertical" && "flex-col") || "flex-row items-start",
+          @class
+        ])
+      }
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </div>
+    """
+  end
+
+  @doc """
+  Divider between fields.
+
+  ## Examples
+
+      <.field_separator />
+  """
+  attr :class, :string, default: nil
+  attr :rest, :global
+
+  def field_separator(assigns) do
+    ~H"""
+    <div role="separator" class={classes(["shrink-0 bg-border h-[1px] w-full my-4", @class])} {@rest}>
+    </div>
+    """
+  end
 end

@@ -187,6 +187,7 @@ If using [devenv](https://devenv.sh/), shortcut scripts are available:
 | Badge          | ✅    | ✅     |
 | Breadcrumb     | ✅    | ✅     |
 | Button         | ✅    | ✅     |
+| Button Group   | ❌    | ✅    |
 | Card           | ✅    | ✅     |
 | Calendar       | ❌    | ✅    |
 | Carousel       | ❌    | ✅    |
@@ -200,10 +201,14 @@ If using [devenv](https://devenv.sh/), shortcut scripts are available:
 | Dialog         | ✅    | ✅     |
 | Drawer         | ❌    | ✅    |
 | Dropdown Menu  | ✅    | ✅     |
+| Empty          | ❌    | ✅    |
 | Form           | ✅    | ✅     |
 | Hover Card     | ✅    | ✅      |
 | Input          | ✅    | ✅     |
+| Input Group    | ❌    | ✅    |
 | Input OTP      | ❌    | ✅    |
+| Item           | ❌    | ✅    |
+| Kbd            | ❌    | ✅    |
 | Label          | ✅    | ✅      |
 | Menubar        | ❌    | ✅    |
 | Navigation Menu| ❌    | ✅    |
@@ -218,6 +223,7 @@ If using [devenv](https://devenv.sh/), shortcut scripts are available:
 | Sheet          | ✅    | ✅     |
 | Skeleton       | ✅    | ✅     |
 | Slider         | ✅    | ✅     |
+| Spinner        | ❌    | ✅    |
 | Switch         | ✅    | ✅   |
 | Table          | ✅    | ✅    |
 | Tabs           | ✅    | ✅     |

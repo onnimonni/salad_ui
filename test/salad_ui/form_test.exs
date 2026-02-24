@@ -130,4 +130,92 @@ defmodule SaladUI.FormTest do
       assert html =~ "</div></form>"
     end
   end
+
+  describe "fieldset/1" do
+    test "renders a fieldset element" do
+      assigns = %{}
+
+      html =
+        ~H"""
+        <.fieldset>
+          <.field_legend>Personal Info</.field_legend>
+        </.fieldset>
+        """
+        |> rendered_to_string()
+        |> clean_string()
+
+      assert html =~ "<fieldset"
+      assert html =~ "space-y-4"
+      assert html =~ "Personal Info"
+    end
+  end
+
+  describe "field_legend/1" do
+    test "renders a legend element" do
+      assigns = %{}
+
+      html =
+        ~H"""
+        <.field_legend>Account Details</.field_legend>
+        """
+        |> rendered_to_string()
+        |> clean_string()
+
+      assert html =~ "<legend"
+      assert html =~ "font-semibold"
+      assert html =~ "Account Details"
+    end
+  end
+
+  describe "field_group/1" do
+    test "renders vertical field group" do
+      assigns = %{}
+
+      html =
+        ~H"""
+        <.field_group>
+          <div>Field 1</div>
+          <div>Field 2</div>
+        </.field_group>
+        """
+        |> rendered_to_string()
+        |> clean_string()
+
+      assert html =~ "flex-col"
+      assert html =~ "gap-4"
+    end
+
+    test "renders horizontal field group" do
+      assigns = %{}
+
+      html =
+        ~H"""
+        <.field_group orientation="horizontal">
+          <div>Field 1</div>
+          <div>Field 2</div>
+        </.field_group>
+        """
+        |> rendered_to_string()
+        |> clean_string()
+
+      assert html =~ "flex-row"
+      assert html =~ "items-start"
+    end
+  end
+
+  describe "field_separator/1" do
+    test "renders a separator" do
+      assigns = %{}
+
+      html =
+        ~H"""
+        <.field_separator />
+        """
+        |> rendered_to_string()
+        |> clean_string()
+
+      assert html =~ "role=\"separator\""
+      assert html =~ "bg-border"
+    end
+  end
 end

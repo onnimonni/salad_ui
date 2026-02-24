@@ -185,6 +185,7 @@ defmodule SaladUI do
       import SaladUI.Badge
       import SaladUI.Breadcrumb
       import SaladUI.Button
+      import SaladUI.ButtonGroup
       import SaladUI.Calendar
       import SaladUI.Card
       import SaladUI.Carousel
@@ -198,12 +199,16 @@ defmodule SaladUI do
       import SaladUI.Dialog
       import SaladUI.Drawer
       import SaladUI.DropdownMenu
+      import SaladUI.Empty
       import SaladUI.Form
       import SaladUI.Helpers
       import SaladUI.HoverCard
       import SaladUI.Icon
       import SaladUI.Input
+      import SaladUI.InputGroup
       import SaladUI.InputOTP
+      import SaladUI.Item
+      import SaladUI.Kbd
       import SaladUI.Label
       import SaladUI.Menu
       import SaladUI.Menubar
@@ -220,6 +225,7 @@ defmodule SaladUI do
       import SaladUI.Sidebar
       import SaladUI.Skeleton
       import SaladUI.Slider
+      import SaladUI.Spinner
       import SaladUI.Switch
       import SaladUI.Table
       import SaladUI.Tabs

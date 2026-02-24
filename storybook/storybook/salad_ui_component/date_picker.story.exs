@@ -21,7 +21,7 @@ defmodule Storybook.SaladUIComponents.DatePicker do
         description: "A date picker with a pre-selected date.",
         attributes: %{
           id: "dp-with-value",
-          value: Date.utc_today()
+          value: {:eval, "Date.utc_today()"}
         }
       }
     ]

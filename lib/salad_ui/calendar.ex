@@ -13,6 +13,9 @@ defmodule SaladUI.Calendar do
   """
   use SaladUI, :component
 
+  # Alias to avoid shadowing Elixir's Calendar module within this namespace
+  alias Elixir.Calendar, as: Cal
+
   @day_names ~w(Su Mo Tu We Th Fr Sa)
 
   @doc """
@@ -98,7 +101,7 @@ defmodule SaladUI.Calendar do
               </svg>
             </button>
             <div class="text-sm font-medium">
-              {Calendar.strftime(@display_month, "%B %Y")}
+              {Cal.strftime(@display_month, "%B %Y")}
             </div>
             <button
               type="button"

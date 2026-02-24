@@ -14,7 +14,7 @@ defmodule Storybook.SaladUIComponents.Calendar do
         attributes: %{
           id: "cal-default",
           mode: "single",
-          month: Date.utc_today()
+          month: {:eval, "Date.utc_today()"}
         }
       },
       %Variation{
@@ -23,8 +23,8 @@ defmodule Storybook.SaladUIComponents.Calendar do
         attributes: %{
           id: "cal-selected",
           mode: "single",
-          month: Date.utc_today(),
-          value: Date.utc_today()
+          month: {:eval, "Date.utc_today()"},
+          value: {:eval, "Date.utc_today()"}
         }
       }
     ]

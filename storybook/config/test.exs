@@ -13,12 +13,21 @@ config :salad_storybook, SaladStorybook.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
+# Enable server for Wallaby browser tests
 config :salad_storybook, SaladStorybookWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "zbV539kAOLAPvb9TRqLqsWV/XyQAQZBZtx18wdNzSUpo5Sv3r/CoWwVcChSd75Sa",
-  server: false
+  server: true
+
+config :wallaby,
+  otp_app: :salad_storybook,
+  base_url: "http://localhost:4002",
+  driver: Wallaby.Chrome,
+  chromedriver: [
+    headless: true,
+    path: System.get_env("CHROMEDRIVER_PATH", "chromedriver")
+  ],
+  screenshot_on_failure: true
 
 # In test we don't send emails.
 config :salad_storybook, SaladStorybook.Mailer, adapter: Swoosh.Adapters.Test

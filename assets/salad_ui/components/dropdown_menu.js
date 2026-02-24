@@ -1,7 +1,7 @@
 // saladui/components/dropdown_menu.js
 import Component from "../core/component";
-import SaladUI from "../index";
 import PositionedElement from "../core/positioned-element";
+import SaladUI from "../index";
 import Menu from "./menu";
 
 /**

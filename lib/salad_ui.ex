@@ -180,27 +180,39 @@ defmodule SaladUI do
       import SaladUI.Accordion
       import SaladUI.Alert
       import SaladUI.AlertDialog
+      import SaladUI.AspectRatio
       import SaladUI.Avatar
       import SaladUI.Badge
       import SaladUI.Breadcrumb
       import SaladUI.Button
+      import SaladUI.Calendar
       import SaladUI.Card
+      import SaladUI.Carousel
       import SaladUI.Chart
       import SaladUI.Checkbox
       import SaladUI.Collapsible
+      import SaladUI.Combobox
+      import SaladUI.ContextMenu
+      import SaladUI.DataTable
+      import SaladUI.DatePicker
       import SaladUI.Dialog
+      import SaladUI.Drawer
       import SaladUI.DropdownMenu
       import SaladUI.Form
       import SaladUI.Helpers
       import SaladUI.HoverCard
       import SaladUI.Icon
       import SaladUI.Input
+      import SaladUI.InputOTP
       import SaladUI.Label
       import SaladUI.Menu
+      import SaladUI.Menubar
+      import SaladUI.NavigationMenu
       import SaladUI.Pagination
       import SaladUI.Popover
       import SaladUI.Progress
       import SaladUI.RadioGroup
+      import SaladUI.Resizable
       import SaladUI.ScrollArea
       import SaladUI.Select
       import SaladUI.Separator
@@ -212,6 +224,7 @@ defmodule SaladUI do
       import SaladUI.Table
       import SaladUI.Tabs
       import SaladUI.Textarea
+      import SaladUI.Toast
       import SaladUI.Toggle
       import SaladUI.ToggleGroup
       import SaladUI.Tooltip

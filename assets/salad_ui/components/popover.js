@@ -1,7 +1,7 @@
 // saladui/components/popover.js
 import Component from "../core/component";
-import SaladUI from "../index";
 import PositionedElement from "../core/positioned-element";
+import SaladUI from "../index";
 
 class PopoverComponent extends Component {
   constructor(el, hookContext) {
@@ -110,7 +110,7 @@ class PopoverComponent extends Component {
     }
   }
 
-  onOpenEnter(params = {}) {
+  onOpenEnter(_params = {}) {
     this.initializePositionedElement();
     this.positionedElement?.activate();
     this.pushEvent("opened");

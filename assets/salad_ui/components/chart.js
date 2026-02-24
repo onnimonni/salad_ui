@@ -1,7 +1,8 @@
 // saladui/components/chart.js
+
+import Chart from "chart.js/auto";
 import Component from "../core/component";
 import SaladUI from "../index";
-import Chart from "chart.js/auto";
 
 function cssvar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name);

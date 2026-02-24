@@ -1,28 +1,3 @@
-defmodule Storybook.Examples.FormDemo.Item do
-  @moduledoc false
-  use Ecto.Schema
-
-  import Ecto.Changeset
-
-  schema "items" do
-    field :name, :string
-    field :description, :string
-    field :material, :string
-    field :sellable, :boolean, default: true
-    field :virtual, :boolean, default: false
-    field :color, :string, default: "red"
-    field :scale, :integer, default: 10
-    field :toggle, :boolean
-    field :style, :string
-  end
-
-  def changeset(user, params \\ %{}) do
-    user
-    |> cast(params, [:name, :description, :material, :sellable, :color, :scale, :virtual])
-    |> validate_required([:name, :description])
-  end
-end
-
 defmodule Storybook.Examples.FormDemo do
   @moduledoc false
   use PhoenixStorybook.Story, :example
@@ -41,7 +16,7 @@ defmodule Storybook.Examples.FormDemo do
   import SaladUI.Toggle
   import SaladUI.ToggleGroup
 
-  alias Storybook.Examples.FormDemo.Item
+  alias SaladStorybook.FormDemoItem, as: Item
 
   def doc do
     "An example of convert React template for Shadcn ui to heex template using SaladUI."

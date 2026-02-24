@@ -7,9 +7,14 @@ import StateMachine from "./state-machine";
 import { animateTransition, queryDOM } from "./utils";
 
 class Component {
+  /**
+   * @param {HTMLElement} el
+   * @param {import("./types.js").ComponentOptions} options
+   */
   constructor(el, options) {
     const { hookContext, initialState = "idle", ignoreItems = true } = options;
 
+    /** @type {HTMLElement} */
     this.el = el;
     this.hook = hookContext;
 
@@ -62,12 +67,15 @@ class Component {
     }
   }
 
+  /** @returns {HTMLElement[]} */
   queryParts() {
-    return queryDOM(this.el, (node) => {
-      if (!node.dataset?.part) return 0;
-      if (node.getAttribute("phx-hook") != null) return -1;
-      return 1;
-    }).concat([this.el]);
+    return /** @type {HTMLElement[]} */ (
+      queryDOM(this.el, (node) => {
+        if (!node.dataset?.part) return 0;
+        if (node.getAttribute("phx-hook") != null) return -1;
+        return 1;
+      }).concat([this.el])
+    );
   }
 
   initEventMappings() {
@@ -134,7 +142,7 @@ class Component {
     }
   }
 
-  onStateChanged(prevState, nextState, params) {
+  onStateChanged(prevState, nextState, _params) {
     if (this.destroyed) return;
 
     // Check if we should animate
@@ -236,7 +244,7 @@ class Component {
 
       // Create a bound handler that will check the current state before executing
       const boundHandler = (event) => {
-        if (stateName == "_all" || this.stateMachine.state === stateName) {
+        if (stateName === "_all" || this.stateMachine.state === stateName) {
           const key = event.key;
           const action = stateEvents.keyMap[key];
 
@@ -375,7 +383,7 @@ class Component {
    * Update UI to reflect current state
    * @param {Object} params - Optional parameters from state transition
    */
-  updateUI(params = {}) {
+  updateUI(_params = {}) {
     const currentState = this.stateMachine.state;
 
     // Update data-state attributes on all parts and root element
@@ -388,8 +396,9 @@ class Component {
 
   /**
    * Update part visibility based on current state configuration
+   * @param {string} [_state] - Unused, reads from state machine directly
    */
-  updatePartsVisibility() {
+  updatePartsVisibility(_state) {
     const currentState = this.stateMachine.state;
     const stateVisibility = this.hiddenConfig[currentState];
     if (!stateVisibility) return;
@@ -404,10 +413,18 @@ class Component {
     });
   }
 
+  /**
+   * @param {string} name
+   * @returns {HTMLElement|undefined}
+   */
   getPart(name) {
     return this.allParts.find((part) => part.dataset.part === name);
   }
 
+  /**
+   * @param {string} name
+   * @returns {HTMLElement[]}
+   */
   getAllParts(name) {
     return this.allParts.filter((part) => part.dataset.part === name);
   }
@@ -486,11 +503,6 @@ class Component {
   handleCommand(command, params = {}) {
     return this.transition(command, params);
   }
-
-  // Alias for transition()
-  trigger(event, params = {}) {
-    return this.transition(event, params);
-  }
 }
 
 /**
@@ -511,7 +523,7 @@ class AriaManager {
       if (!parts || parts.length === 0) return;
 
       // Apply attributes to all matching elements
-      parts.forEach((part, index) => {
+      parts.forEach((part, _index) => {
         // Set ID if not already defined
         // this cause server dom patching break the client DOM
         // if (!part.id) {

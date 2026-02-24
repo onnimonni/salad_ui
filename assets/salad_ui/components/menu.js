@@ -1,6 +1,7 @@
 // saladui/components/dropdown_menu.js
-import Component from "../core/component";
+
 import Collection from "../core/collection";
+import Component from "../core/component";
 
 /**
  * Base class for dropdown menu items that provides common functionality
@@ -69,7 +70,7 @@ class MenuItemBase extends Component {
     }
   }
 
-  handleActivation(event) {
+  handleActivation(_event) {
     if (this.disabled) return;
     this.pushEvent(
       "item-selected",
@@ -92,20 +93,12 @@ class MenuItemBase extends Component {
 /**
  * Regular dropdown menu item implementation
  */
-class MenuItem extends MenuItemBase {
-  constructor(itemElement, parentComponent, options) {
-    super(itemElement, parentComponent, options);
-  }
-}
+class MenuItem extends MenuItemBase {}
 
 /**
  * Checkbox item implementation that can toggle between checked states
  */
 class MenuCheckboxItem extends MenuItemBase {
-  constructor(itemElement, parentComponent, options) {
-    super(itemElement, parentComponent, options);
-  }
-
   getComponentConfig() {
     return {
       stateMachine: {
@@ -160,7 +153,7 @@ class MenuCheckboxItem extends MenuItemBase {
           all: {
             role: "menuitemcheckbox",
             disabled: () => (this.disabled ? "true" : null),
-            checked: () => (this.state == "checked" ? "true" : "false"),
+            checked: () => (this.state === "checked" ? "true" : "false"),
           },
         },
       },
@@ -183,7 +176,7 @@ class MenuCheckboxItem extends MenuItemBase {
       "checked-changed",
       {
         value: this.value,
-        checked: this.state == "checked",
+        checked: this.state === "checked",
       },
       this.parent.el,
     );
@@ -293,7 +286,7 @@ class Menu extends Component {
 
   navigateItem(direction) {
     // Check if we have an active focused item
-    let currentItem = this.collection.focusedItem;
+    const currentItem = this.collection.focusedItem;
 
     // Get target item using collection's navigation methods
     const targetItem = this.collection.getItem(direction, currentItem);

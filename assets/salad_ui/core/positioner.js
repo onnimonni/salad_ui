@@ -45,7 +45,7 @@ class Positioner {
     }
 
     // Calculate initial position
-    let { x, y } = this.getBasePosition(
+    let { x, y } = Positioner.getBasePosition(
       placement,
       alignment,
       elementRect,
@@ -57,7 +57,7 @@ class Positioner {
     // Apply flipping if needed
     let actualPlacement = placement;
     if (flip) {
-      const flippedPlacement = this.getFlippedPlacement(
+      const flippedPlacement = Positioner.getFlippedPlacement(
         placement,
         { x, y, width: elementRect.width, height: elementRect.height },
         containerRect,
@@ -65,7 +65,7 @@ class Positioner {
 
       if (flippedPlacement !== placement) {
         actualPlacement = flippedPlacement;
-        const flippedPosition = this.getBasePosition(
+        const flippedPosition = Positioner.getBasePosition(
           flippedPlacement,
           alignment,
           elementRect,
@@ -94,8 +94,8 @@ class Positioner {
   static applyPosition(element, x, y) {
     element.style.position = "fixed";
     // element.style.transform = `translate(${x}px, ${y}px)`;
-    element.style.top = y + "px";
-    element.style.left = x + "px";
+    element.style.top = `${y}px`;
+    element.style.left = `${x}px`;
     element.style.margin = "0"; // Reset margins to avoid positioning issues
   }
 

@@ -2,10 +2,11 @@
 /**
  * PositionedElement - Main positioning class that integrates all positioning utilities
  */
-import Positioner from "./positioner";
-import FocusTrap from "./focus-trap";
+
 import ClickOutsideMonitor from "./click-outside";
+import FocusTrap from "./focus-trap";
 import Portal from "./portal";
+import Positioner from "./positioner";
 import ScrollManager from "./scroll-manager";
 
 class PositionedElement {
@@ -111,11 +112,11 @@ class PositionedElement {
     // set reference width and height ass css variable
     this.element.style.setProperty(
       "--salad-reference-width",
-      this.reference.offsetWidth + "px",
+      `${this.reference.offsetWidth}px`,
     );
     this.element.style.setProperty(
       "--salad-reference-height",
-      this.reference.offsetHeight + "px",
+      `${this.reference.offsetHeight}px`,
     );
 
     this.active = true;

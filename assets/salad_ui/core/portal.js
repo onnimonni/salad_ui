@@ -34,7 +34,7 @@ class Portal {
     };
 
     // Store the metadata in our registry
-    this.portalRegistry.set(element, originalData);
+    Portal.portalRegistry.set(element, originalData);
 
     // Move the element to the portal container
     container.appendChild(element);
@@ -56,7 +56,7 @@ class Portal {
     if (!element) return false;
 
     // Get the original data from our registry
-    const originalData = this.portalRegistry.get(element);
+    const originalData = Portal.portalRegistry.get(element);
 
     if (!originalData || !originalData.parent) {
       return false;
@@ -94,7 +94,7 @@ class Portal {
    */
   static isInPortal(element) {
     if (!element) return false;
-    const data = this.portalRegistry.get(element);
+    const data = Portal.portalRegistry.get(element);
     return data?.inPortal === true;
   }
 
@@ -108,7 +108,7 @@ class Portal {
     if (!element) return;
 
     // Get original data from registry to ensure styles are properly tracked
-    const originalData = this.portalRegistry.get(element);
+    const originalData = Portal.portalRegistry.get(element);
     if (originalData) {
       originalData.styles.pointerEvents = element.style.pointerEvents;
     }
@@ -172,7 +172,7 @@ class Portal {
     if (!element) return;
 
     // Get the original data from registry if available
-    const originalData = this.portalRegistry.get(element);
+    const originalData = Portal.portalRegistry.get(element);
     const originalPointerEvents = originalData?.styles?.pointerEvents || "";
 
     // Restore pointer-events on the element

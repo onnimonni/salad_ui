@@ -1,8 +1,9 @@
 // saladui/components/dialog.js
-import Component from "../core/component";
-import SaladUI from "../index";
-import FocusTrap from "../core/focus-trap";
+
 import ClickOutsideMonitor from "../core/click-outside";
+import Component from "../core/component";
+import FocusTrap from "../core/focus-trap";
+import SaladUI from "../index";
 
 class DialogComponent extends Component {
   constructor(el, hookContext) {
@@ -15,7 +16,7 @@ class DialogComponent extends Component {
     this.config.preventDefaultKeys = ["Escape"];
 
     this.setupEvents();
-    this.transition(this.el.dataset.open == "true" ? "open" : "close");
+    this.transition(this.el.dataset.open === "true" ? "open" : "close");
   }
 
   getComponentConfig() {

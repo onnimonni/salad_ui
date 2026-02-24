@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "strict": false,
+    "noEmit": true,
+    "target": "es2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "salad_ui/*": ["salad_ui/*"]
+    }
+  },
+  "include": ["salad_ui/**/*.js"],
+  "exclude": ["node_modules"]
+}

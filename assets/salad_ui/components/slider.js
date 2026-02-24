@@ -35,7 +35,9 @@ class SliderComponent extends Component {
     this.value = parseFloat(
       dataValue !== undefined && dataValue !== null
         ? dataValue
-        : (defaultValue !== undefined ? defaultValue : this.min),
+        : defaultValue !== undefined
+          ? defaultValue
+          : this.min,
     );
 
     // Clamp value to min/max
@@ -165,7 +167,7 @@ class SliderComponent extends Component {
     const trackRect = this.track.getBoundingClientRect();
 
     // Calculate percentage within track
-    let percentage = Math.max(
+    const percentage = Math.max(
       0,
       Math.min(1, (clientX - trackRect.left) / trackRect.width),
     );

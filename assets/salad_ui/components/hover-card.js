@@ -1,7 +1,7 @@
 // saladui/components/hover_card.js
 import Component from "../core/component";
-import SaladUI from "../index";
 import PositionedElement from "../core/positioned-element";
+import SaladUI from "../index";
 
 // Define constants at the module level outside the class
 const DEFAULT_POSITION_CONFIG = {

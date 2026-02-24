@@ -1,7 +1,8 @@
 // saladui/components/tabs.js
+
+import Collection from "../core/collection";
 import Component from "../core/component";
 import SaladUI from "../index";
-import Collection from "../core/collection";
 
 class TabsComponent extends Component {
   constructor(el, hookContext) {

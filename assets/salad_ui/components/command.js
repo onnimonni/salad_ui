@@ -1,5 +1,5 @@
-import Component from "../core/component";
 import SaladUI from "..";
+import Component from "../core/component";
 
 /**
  * CommandComponent for SaladUI

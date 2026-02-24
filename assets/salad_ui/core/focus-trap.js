@@ -53,8 +53,7 @@ class FocusTrap {
 
     // Restore focus if possible
     if (
-      this.previouslyFocused &&
-      this.previouslyFocused.focus &&
+      this.previouslyFocused?.focus &&
       this.isElementInViewport(this.previouslyFocused)
     ) {
       setTimeout(() => {

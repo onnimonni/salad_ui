@@ -1,6 +1,7 @@
 // saladui/components/accordion.js
-import Component from "../core/component";
+
 import Collection from "../core/collection";
+import Component from "../core/component";
 import SaladUI from "../index";
 
 /**

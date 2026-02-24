@@ -41,7 +41,7 @@ export function executeAnimation(targetElement, animOptions) {
   console.log("Animating", targetElement, animOptions);
   return new Promise((resolve) => {
     const { animation, duration } = animOptions;
-    let [transitionRun, transitionStart, transitionEnd] = animation || [
+    const [transitionRun, transitionStart, transitionEnd] = animation || [
       [],
       [],
       [],

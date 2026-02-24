@@ -1,7 +1,8 @@
 // saladui/components/radio_group.js
+
+import Collection from "../core/collection";
 import Component from "../core/component";
 import SaladUI from "../index";
-import Collection from "../core/collection";
 
 class RadioGroupComponent extends Component {
   constructor(el, hookContext) {
@@ -176,7 +177,7 @@ class RadioGroupComponent extends Component {
     // If no item is selected, make first enabled item focusable
     if (!this.collection.getValue()) {
       const firstItem = this.collection.getItem("first");
-      if (firstItem && firstItem.instance) {
+      if (firstItem?.instance) {
         firstItem.instance.setAttribute("tabindex", "0");
       }
     }
@@ -193,13 +194,13 @@ class RadioGroupComponent extends Component {
         if (selectedValue) {
           // Focus the selected item
           const selectedItem = this.collection.getItemByValue(selectedValue);
-          if (selectedItem && selectedItem.instance) {
+          if (selectedItem?.instance) {
             selectedItem.instance.focus();
           }
         } else {
           // Focus the first enabled item if none is selected
           const firstItem = this.collection.getItem("first");
-          if (firstItem && firstItem.instance) {
+          if (firstItem?.instance) {
             firstItem.instance.focus();
           }
         }

@@ -1,8 +1,9 @@
 // saladui/components/select.js
-import Component from "../core/component";
-import SaladUI from "../index";
+
 import Collection from "../core/collection";
+import Component from "../core/component";
 import PositionedElement from "../core/positioned-element";
+import SaladUI from "../index";
 
 /**
  * SelectItem class to manage individual select options
@@ -135,7 +136,7 @@ class SelectComponent extends Component {
 
     // Get configuration from options
     this.multiple = this.options.multiple || false;
-    this.usePortal = this.options.hasOwnProperty("usePortal")
+    this.usePortal = Object.hasOwn(this.options, "usePortal")
       ? this.options.usePortal
       : false;
     this.portalContainer = this.options.portalContainer || null;
@@ -245,7 +246,7 @@ class SelectComponent extends Component {
       this.el.querySelectorAll("[data-part='item']"),
     );
 
-    itemElements.map((element) => {
+    itemElements.forEach((element) => {
       // Create a SelectItem instance for each item
       const value = element.dataset.value;
 
